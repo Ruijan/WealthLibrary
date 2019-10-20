@@ -17,11 +17,18 @@ public class Account {
 		initialBalance = Math.abs(accountBalance);
 		
 	}
-	public void addExpense(Expense expense) {
+	public void addDebit(Expense expense) {
 		expenses.add(expense);
-		balance -= expense.amount;
+		updateAccountBalance(-expense.amount);
 	}
 	
+	public void addCredit(double credit) {
+		updateAccountBalance(credit); 
+	}
+	
+	private void updateAccountBalance(double amount) {
+		balance +=amount;
+	}
 	public Expense getExpensebyIndex(int index) { 
 		return expenses.get(index); 
 	}
@@ -36,8 +43,5 @@ public class Account {
 		}
 		return searchExpenses;
 	}
-	public void addBalance(double balanceToAdd) {
-		balance +=balanceToAdd;
-		
-	}
+	
 }
