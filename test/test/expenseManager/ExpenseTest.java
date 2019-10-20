@@ -15,11 +15,16 @@ class ExpenseTest {
 		double newAmount = 345.8;
 		String newLocation = "Tokyo";
 		Date today = new Date();
-		Expense expense = new Expense(newAmount, newLocation, today, false);
+		String purpose = "Something";
+		boolean cyclical = true;
+		Expense expense = new Expense(newAmount, newLocation, today, purpose, cyclical);
 		assertEquals(newAmount, expense.amount);
 		assertEquals(newLocation, expense.location);
 		assertEquals(today, expense.date);
 		assertEquals(false, expense.paid);
+		assertEquals(purpose,expense.description);
+		assertEquals(cyclical,expense.cyclical);
+		
 	}
 
 }
