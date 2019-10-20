@@ -3,6 +3,7 @@ package test.expenseManager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -11,37 +12,55 @@ import expenseManager.Account;
 import expenseManager.Expense;
 
 class AccountTest {
-
-	@Test
-	void createAccount() { 
-		String accountName = "MyFirstAccount";
-		String accountType = "Survivor";
-		String accountCurrency = "EUR";
-		double accountAmount = 0.0;
-		Account account = new Account(accountName,accountType,accountCurrency,accountAmount);
-		assertEquals(accountName, account.name);
-		assertEquals(accountType, account.type);
-		assertEquals(accountCurrency,account.currency);
-		assertEquals(accountAmount,account.amount,0.001);
-		assertEquals(accountAmount,account.initialAmount,0.001);
 	
+	public String accountNameAtTest = "MyFirstAccount";
+	public String accountTypeAtTest = "Survivor";
+	public String accountCurrencyAtTest = "EUR";
+	public double accountBalanceAtTest = 1000;
+	
+	@Test
+	void createAccount() {  
+		Account account = new Account(accountNameAtTest,accountTypeAtTest,accountCurrencyAtTest,accountBalanceAtTest);
+		
+		assertEquals(accountNameAtTest, account.name);
+		assertEquals(accountTypeAtTest, account.type);
+		assertEquals(accountCurrencyAtTest,account.currency);
+		assertEquals(Math.abs(accountBalanceAtTest),account.balance,0.001);
+		assertEquals(Math.abs(accountBalanceAtTest),account.balance,0.001);
+		
 	}
 	@Test
 	void addExpense() {
+		Account account = new Account(accountNameAtTest, accountTypeAtTest, accountCurrencyAtTest, accountBalanceAtTest);
+		
 		String newLocation = "Paris";
-		Date newDate = new Date();
-		boolean isPaid = false;
-		double newAmount = 300;
-		String accountName = "MyFirstAccount";
-		String accountType = "Survivor";
-		String accountCurrency = "EUR";
-		double accountAmount = 0.0;
-		Account account = new Account(accountName, accountType, accountCurrency, accountAmount);
-		Expense expense = new Expense(newAmount, newLocation, newDate, isPaid);
+		Date newDate = new Date(); 
+		double expenseAmount = 300; 
+		String description = "Something";
+		Expense expense = new Expense(expenseAmount, newLocation, newDate, description,true);
+		
 		account.addExpense(expense);
 		assertEquals(expense, account.expenses.get(0));
-		assertEquals(accountAmount+newAmount,account.amount,0.001);
-		assertEquals(accountAmount,account.initialAmount,0.001);
-		
+		assertEquals(accountBalanceAtTest-expenseAmount,account.balance,0.001);
+		assertEquals(accountBalanceAtTest,account.initialBalance,0.001); 
+	}
+	@Test
+	void getExpenseBydescription(){
+		Account account = new Account(accountNameAtTest, accountTypeAtTest, accountCurrencyAtTest, accountBalanceAtTest);
+		String description ="Something"; 
+		Expense expense = new Expense(100, "", new Date(), description,true); 
+		account.addExpense(expense);   
+		ArrayList <Expense> expensesByDescription = new ArrayList<Expense>();
+		expensesByDescription.add(expense); 
+		assertEquals(expensesByDescription, account.getExpensesByDescription("Something"));
+	}
+	@Test
+	void addBalance() {
+		Account account = new Account(accountNameAtTest, accountTypeAtTest, accountCurrencyAtTest, accountBalanceAtTest);
+		double balance = 100;
+		account.addBalance(balance );
+		assertEquals(accountBalanceAtTest+balance,account.balance,0.001);
+		assertEquals(account.balance-balance, account.initialBalance,0.001); 
 	}
 }
+

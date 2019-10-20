@@ -7,12 +7,15 @@ public class Expense {
 	public String location;
 	public Date date;
 	public boolean paid;
+	public String description;
+	public boolean cyclical;
 	
-	public Expense(double newAmount, String newLocation, Date newDate, boolean isPaid) {
+	public Expense(double newAmount, String newLocation, Date newDate, String newDescription, boolean isCyclical) {
 		amount = newAmount;
 		location = newLocation;
-		date = newDate;
-		paid = isPaid;
+		date = newDate; 
+		description = newDescription;
+		cyclical = isCyclical;
 	}
 	
 }
