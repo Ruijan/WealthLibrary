@@ -1,4 +1,4 @@
-package expense;
+package expenseManager;
 import java.util.Date;
 
 public class Expense {
@@ -7,12 +7,12 @@ public class Expense {
 	public String location;
 	public Date date;
 	public boolean paid;
-
+	
 	public Expense(double newAmount, String newLocation, Date newDate, boolean isPaid) {
 		amount = newAmount;
 		location = newLocation;
 		date = newDate;
 		paid = isPaid;
 	}
-
+	
 }

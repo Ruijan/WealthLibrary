@@ -1,10 +1,11 @@
-package test.expense;
+package test.expenseManager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import expense.Expense;
+import expenseManager.Expense;
+
 import java.util.Date;
 
 class ExpenseTest {
