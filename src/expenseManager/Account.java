@@ -18,12 +18,11 @@ public class Account {
 	public ArrayList <Debt>  debts = new ArrayList<Debt>();
 	public ArrayList <Asset> assets = new ArrayList<Asset>();
 	
-	public Account(String accountName, String accountType, String accountCurrency, double accountBalance) {
+	public Account(String accountName, String accountCurrency, double accountBalance) {
 		name = accountName;
-		type = accountType;
 		currency = accountCurrency;
-		balance = Math.abs(accountBalance);
-		initialBalance = Math.abs(accountBalance); 
+		balance =  accountBalance;
+		initialBalance =  accountBalance; 
 	}
 	
 	public void addDebit(Expense expense) {
@@ -59,7 +58,14 @@ public class Account {
 		Set <String>uniqueTags = new HashSet<String>(tags); 
 		return (new ArrayList<String>(uniqueTags));
 	}
- 
+	
+	public ArrayList<String> getAvailableCreditTypes() {
+		ArrayList <String> creditType = new ArrayList<String>(); 
+		credits.forEach((credit) -> creditType.add(credit.type));  
+		Set <String>creditTypes = new HashSet<String>(creditType); 
+		return (new ArrayList<String>(creditTypes)); 
+	}
+	
 	public Map<String,Long> getTagsUsageCount() {
 		ArrayList <String> tags = new ArrayList<String>(); 
 		Map<String,Long> usage = new HashMap<>();
@@ -74,12 +80,7 @@ public class Account {
 		return (long) Collections.frequency(tags,tag);
 	}
 
-	public ArrayList<String> getAvailableCreditTypes() {
-		ArrayList <String> creditType = new ArrayList<String>(); 
-		credits.forEach((credit) -> creditType.add(credit.type));  
-		Set <String>creditTypes = new HashSet<String>(creditType); 
-		return (new ArrayList<String>(creditTypes)); 
-	}
+
 	
 	
 }

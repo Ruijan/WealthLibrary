@@ -19,17 +19,12 @@ class ExpenseTest {
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Something");
 		descriptions.add("Food");
-		boolean cyclical = true;
-		long cycle = 1;
-		boolean isPaid = true;
-		Expense expense = new Expense(newAmount, newLocation, today, descriptions, cyclical,isPaid,cycle);
+		Expense expense = new Expense(newAmount, newLocation, today, descriptions);
 		assertEquals(newAmount, expense.amount);
 		assertEquals(newLocation, expense.location);
 		assertEquals(today, expense.date);
 		assertEquals(false, expense.paid);
-		assertEquals(descriptions,expense.tags);
-		assertEquals(cyclical,expense.cyclical);
-		assertEquals(cycle,expense.monthlyCycle);
+		assertEquals(descriptions,expense.tags); 
 	}
 
 }

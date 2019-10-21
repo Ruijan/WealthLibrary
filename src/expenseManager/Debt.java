@@ -9,12 +9,11 @@ public class Debt {
 	public Date startDate;
 	public String type;
 	
-	public Debt(double debtAmount, String debtType, double debtInterest, long debtPeriod, Date debtStartDate) {
+	public Debt(double debtAmount, double debtInterest, long debtPeriod, Date debtStartDate) {
 		 amount = debtAmount;
 		 interest = debtInterest;
 		 period = debtPeriod;
 		 startDate = debtStartDate;
-		 type = debtType;
 	}
 
 }
