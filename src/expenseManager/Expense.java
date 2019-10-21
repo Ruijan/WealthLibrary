@@ -1,4 +1,5 @@
 package expenseManager;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Expense {
@@ -7,15 +8,15 @@ public class Expense {
 	public String location;
 	public Date date;
 	public boolean paid;
-	public String description;
+	public ArrayList<String> tags;
 	public boolean cyclical;
+	public long monthlyCycle; 
 	
-	public Expense(double newAmount, String newLocation, Date newDate, String newDescription, boolean isCyclical) {
+	public Expense(double newAmount, String newLocation, Date newDate, ArrayList<String> newTags) {
 		amount = newAmount;
 		location = newLocation;
 		date = newDate; 
-		description = newDescription;
-		cyclical = isCyclical;
+		tags = newTags;
 	}
 	
 }

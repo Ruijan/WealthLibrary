@@ -1,43 +1,86 @@
 package expenseManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class Account {
 	public String name;
 	public String type;
 	public String currency;
 	public double balance;
-	public ArrayList <Expense> expenses = new ArrayList<Expense>();
 	public double initialBalance; 
-	public Account(String accountName, String accountType, String accountCurrency, double accountBalance) {
+	public ArrayList <Expense> debits = new ArrayList<Expense>();  
+	public ArrayList <Credit> credits = new ArrayList<Credit>(); 
+	public ArrayList <Debt>  debts = new ArrayList<Debt>();
+	public ArrayList <Asset> assets = new ArrayList<Asset>();
+	
+	public Account(String accountName, String accountCurrency, double accountBalance) {
 		name = accountName;
-		type = accountType;
 		currency = accountCurrency;
-		balance = Math.abs(accountBalance);
-		initialBalance = Math.abs(accountBalance);
-		
-	}
-	public void addExpense(Expense expense) {
-		expenses.add(expense);
-		balance -= expense.amount;
+		balance =  accountBalance;
+		initialBalance =  accountBalance; 
 	}
 	
+	public void addDebit(Expense expense) {
+		debits.add(expense); 
+		updateAccountBalance(-expense.amount);
+	}
+	
+	public void addCredit(Credit credit) {
+		credits.add(credit);
+		updateAccountBalance(credit.amount); 
+	}
+	
+	private void updateAccountBalance(double amount) {
+		balance +=amount;
+	}
 	public Expense getExpensebyIndex(int index) { 
-		return expenses.get(index); 
+		return debits.get(index); 
 	}
 	
-	public ArrayList <Expense> getExpensesByDescription(String description)
+	public ArrayList <Expense> getExpensesByDescription(String searchedTag)
 	{
-		ArrayList <Expense> searchExpenses = new ArrayList<Expense>();
-		for (int index = 0; index < expenses.size();index++) {
-			if (expenses.get(index).description == description )  {
-				searchExpenses.add(expenses.get(index)); 
-			}
+		ArrayList <Expense> searchedExpense = new ArrayList<Expense>(); 
+		for (Expense debit : debits) { 
+			for (String debitString : debit.tags) 
+				if (debitString.equals(searchedTag)) searchedExpense.add(debit);   
 		}
-		return searchExpenses;
+		return searchedExpense;
 	}
-	public void addBalance(double balanceToAdd) {
-		balance +=balanceToAdd;
-		
+
+	public ArrayList<String> getCurrentExpensesTags() {
+		ArrayList <String> tags = new ArrayList<String>(); 
+		debits.forEach((expense) -> tags.addAll(expense.tags));  
+		Set <String>uniqueTags = new HashSet<String>(tags); 
+		return (new ArrayList<String>(uniqueTags));
 	}
+	
+	public ArrayList<String> getAvailableCreditTypes() {
+		ArrayList <String> creditType = new ArrayList<String>(); 
+		credits.forEach((credit) -> creditType.add(credit.type));  
+		Set <String>creditTypes = new HashSet<String>(creditType); 
+		return (new ArrayList<String>(creditTypes)); 
+	}
+	
+	public Map<String,Long> getTagsUsageCount() {
+		ArrayList <String> tags = new ArrayList<String>(); 
+		Map<String,Long> usage = new HashMap<>();
+		debits.forEach((expense) -> tags.addAll(expense.tags));  
+		for(String tag : tags) usage.put(tag, (long) Collections.frequency(tags,tag));
+		return usage;
+	}
+
+	public Long getTagUsageCount(String tag) {
+		ArrayList <String> tags = new ArrayList<String>();  
+		debits.forEach((expense) -> tags.addAll(expense.tags));
+		return (long) Collections.frequency(tags,tag);
+	}
+
+
+	
+	
 }
