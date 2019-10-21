@@ -19,4 +19,11 @@ public class Expense {
 		tags = newTags;
 	}
 	
+	public Expense(Expense newExpense) {
+		amount = newExpense.amount;
+		location = newExpense.location;
+		date = newExpense.date; 
+		tags = newExpense.tags;
+	}
+	
 }
