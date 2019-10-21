@@ -9,8 +9,6 @@ public class Expense {
 	public Date date;
 	public boolean paid;
 	public ArrayList<String> tags;
-	public boolean cyclical;
-	public long monthlyCycle; 
 	
 	public Expense(double newAmount, String newLocation, Date newDate, ArrayList<String> newTags) {
 		amount = newAmount;
