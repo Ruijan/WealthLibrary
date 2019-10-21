@@ -10,13 +10,16 @@ public class Expense {
 	public boolean paid;
 	public ArrayList<String> tags;
 	public boolean cyclical;
+	public long monthlyCycle; 
 	
-	public Expense(double newAmount, String newLocation, Date newDate, ArrayList<String> tag, boolean isCyclical) {
+	public Expense(double newAmount, String newLocation, Date newDate, ArrayList<String> tag, boolean isCyclical, boolean isPaid, long newCycle) {
 		amount = newAmount;
 		location = newLocation;
 		date = newDate; 
 		tags = tag;
 		cyclical = isCyclical;
+		paid = isPaid;
+		monthlyCycle = newCycle;
 	}
 	
 }
