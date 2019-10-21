@@ -35,19 +35,14 @@ public class Account {
 		return debits.get(index); 
 	}
 	
-	public ArrayList <Expense> getExpensesByDescription(String searchedTerm)
+	public ArrayList <Expense> getExpensesByDescription(String searchedTag)
 	{
-		ArrayList <Expense> searchExpenses = new ArrayList<Expense>();
-		Expense expense = null;
-		for (int index = 0; index < debits.size();index++) {
-			expense = debits.get(index);
-			for (int indexTags = 0;indexTags < expense.tags.size();indexTags++) 
-			{
-				if (searchedTerm == expense.tags.get(indexTags))
-				searchExpenses.add(expense); 
-			} 
+		ArrayList <Expense> searchedExpense = new ArrayList<Expense>(); 
+		for (Expense debit : debits) { 
+			for (String debitString : debit.tags) 
+				if (debitString.equals(searchedTag)) searchedExpense.add(debit);   
 		}
-		return searchExpenses;
+		return searchedExpense;
 	}
 
 	public Set<String> getCurrentExpensesTags() {
