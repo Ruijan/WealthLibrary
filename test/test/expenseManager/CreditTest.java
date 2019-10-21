@@ -14,15 +14,11 @@ class CreditTest {
 	void test() {
 		double newAmount = 1000; 
 		Date today = new Date(); 
-		String creditType = "Salary";
 		String newDescription = "Work1";
-		long cycle=1;
-		Credit credit = new Credit(newAmount,newDescription, today, creditType,true,cycle);
+		Credit credit = new Credit(newAmount,newDescription, today);
 		assertEquals(newAmount, credit.amount); 
 		assertEquals(today, credit.date); 
 		assertEquals(newDescription,credit.description);
-		assertEquals(creditType,credit.type);
-		assertEquals(cycle,credit.monthlyCycle);
 		
 	}
 

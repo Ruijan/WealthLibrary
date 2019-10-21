@@ -80,6 +80,26 @@ public class Account {
 		return (long) Collections.frequency(tags,tag);
 	}
 
+	public double getSumOfAllDebits() { 
+		ArrayList <Double> amounts = new ArrayList<Double>();  
+		debits.forEach((expense) -> amounts.add(expense.amount));
+		return  (-sumOfArrayList(amounts));
+	}
+	
+	public double getSumOfAllCredits() { 
+		ArrayList <Double> amounts = new ArrayList<Double>();  
+		credits.forEach((credit) -> amounts.add(credit.amount));
+		return (sumOfArrayList(amounts));
+	}
+	
+	private double sumOfArrayList(ArrayList<Double> list) {
+		double sum = 0;
+		for(Double x : list) sum += x;
+		return sum;
+	}
+ 
+	 
+
 
 	
 	

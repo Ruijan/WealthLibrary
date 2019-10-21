@@ -11,6 +11,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import expenseManager.Account;
+import expenseManager.Asset;
 import expenseManager.Credit;
 import expenseManager.Debt;
 import expenseManager.Expense;
@@ -57,7 +58,15 @@ class AccountTest {
 	}
 	
 	@Test
-	void addAsset() {}
+	void addAsset() {
+		String newAssetName = "Stock";
+		double newYearReturn = 0.1;
+		double newAssetCurrentValue = 100;
+		Asset asset = new Asset(newAssetName,newYearReturn,newAssetCurrentValue);
+		assertEquals(newAssetName, asset.name);
+		assertEquals(newYearReturn, asset.yearReturn,0.001);
+		assertEquals(newAssetCurrentValue,asset.initiaValue,0.001);
+	}
 	
 	@Test
 	void getExpenseBydescription(){
@@ -85,7 +94,7 @@ class AccountTest {
 	@Test
 	void addBalance() {
 		double creditedBalance = 100;
-		Credit credit = new Credit(100,"Work", new Date(),"Salary",true,1);
+		Credit credit = new Credit(100,"Work", new Date());
 		account.addCredit(credit);
 		assertEquals(accountBalanceAtTest+creditedBalance,account.balance,0.001);
 		assertEquals(account.balance-creditedBalance, account.initialBalance,0.001); 
@@ -131,15 +140,25 @@ class AccountTest {
 		assertEquals(3,account.getTagUsageCount("Something"));  
 	}
 	
-	@Test 
-	void getCreditAvailableTypes() { 
-		account.addCredit(new Credit(100,"Slavery", new Date(),"Salary",true,1));
-		account.addCredit(new Credit(100,"SomeStock", new Date(),"Dividend",true,2));
-		ArrayList <String> creditTypes = new ArrayList<String>();
-		creditTypes.add("Salary");
-		creditTypes.add("Dividend");
-		assertEquals(creditTypes,account.getAvailableCreditTypes());  
-	}
-	
+	@Test
+	void sumOfAllExpenses() {
+		ArrayList <String> descriptions1 = new ArrayList<String>();
+		descriptions1.add("Something");  
+		int i;
+		for (i = 0; i< 10; i++) account.addDebit(new Expense(100, "", new Date(), descriptions1));
+		double totalExpenses = -i*100;	
+		assertEquals(totalExpenses,account.getSumOfAllDebits(),0.001);   
+	} 
+	@Test
+	void sumOfAllCredits() {
+		ArrayList <String> descriptions1 = new ArrayList<String>();
+		descriptions1.add("Something");  
+		int i;
+		for (i = 0; i< 10; i++) account.addCredit(new Credit(100,"Salary",new Date()));
+		double totalCredits = i*100;	
+		assertEquals(totalCredits,account.getSumOfAllCredits(),0.001);   
+	} 
+	 
+	 
 }
 
