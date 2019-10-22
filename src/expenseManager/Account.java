@@ -3,8 +3,7 @@ package expenseManager;
 import java.util.ArrayList; 
 
 public class Account {
-	public String name;
-	public String type;
+	public String name; 
 	public String currency;
 	public double balance;
 	public double initialBalance; 
