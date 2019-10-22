@@ -19,10 +19,10 @@ class AccountTest {
 	
 	@Test
 	void createAccount() {  
-		assertEquals(accountNameAtTest, account.name);;
-		assertEquals(accountCurrencyAtTest,account.currency);
-		assertEquals(Math.abs(accountBalanceAtTest),account.balance,0.001);
-		assertEquals(Math.abs(accountBalanceAtTest),account.balance,0.001); 
+		assertEquals(accountNameAtTest, account.data.name);;
+		assertEquals(accountCurrencyAtTest,account.data.currency);
+		assertEquals(Math.abs(accountBalanceAtTest),account.data.balance,0.001);
+		assertEquals(Math.abs(accountBalanceAtTest),account.data.balance,0.001); 
 	}
 	@Test
 	void addExpense() {
@@ -34,9 +34,9 @@ class AccountTest {
 		description.add("Food");
 		Transaction expense = new Transaction(expenseAmount, newLocation, newDate, description);
 		account.addDebit(expense);
-		assertEquals(expense, account.debits.get(0));
-		assertEquals(accountBalanceAtTest-expenseAmount,account.balance,0.001);
-		assertEquals(accountBalanceAtTest,account.initialBalance,0.001); 
+		assertEquals(expense, account.bankBook.debits.get(0));
+		assertEquals(accountBalanceAtTest-expenseAmount,account.data.balance,0.001);
+		assertEquals(accountBalanceAtTest,account.data.initialBalance,0.001); 
 	}
 	@Test 
 	void resetAccount() {
@@ -48,7 +48,7 @@ class AccountTest {
 		account.addDebit(expense);
 		account.addDebit(expense);
 		account.resetAccount();
-		assertEquals(accountBalanceAtTest,account.balance,0.01); 
+		assertEquals(accountBalanceAtTest,account.data.balance,0.01); 
 		
 		
 	}
@@ -61,8 +61,8 @@ class AccountTest {
 		double creditedBalance = 100;
 		Transaction credit = new Transaction(100,"Place", new Date(),descriptions);
 		account.addCredit(credit);
-		assertEquals(accountBalanceAtTest+creditedBalance,account.balance,0.001);
-		assertEquals(account.balance-creditedBalance, account.initialBalance,0.001); 
+		assertEquals(accountBalanceAtTest+creditedBalance,account.data.balance,0.001);
+		assertEquals(account.data.balance-creditedBalance, account.data.initialBalance,0.001); 
 	}
 	
 	@Test 
@@ -73,7 +73,7 @@ class AccountTest {
 		descriptions.add("Food"); 
 		account.addDebit(new Transaction(100, "", new Date(), descriptions)); 
 		account.addDebit(new Transaction(100, "", new Date(), descriptions)); 
-		assertEquals(accountBalanceAtTest - (100 *2), account.balance,0.001);
+		assertEquals(accountBalanceAtTest - (100 *2), account.data.balance,0.001);
 	}
  
 
