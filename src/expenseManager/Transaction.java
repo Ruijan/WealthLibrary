@@ -16,4 +16,12 @@ public class Transaction {
 		date = newDate; 
 		tags = newTags;
 	}
+
+	public Transaction(Transaction newTransaction) { 
+		amount = newTransaction.amount;
+		location = newTransaction.location;
+		date = newTransaction.date; 
+		tags = newTransaction.tags;
+	 
+	}
 }

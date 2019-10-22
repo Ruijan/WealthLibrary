@@ -4,21 +4,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class CyclicalExpense {
+public class CyclicalTransaction {
 
-	private Expense expenseTemplate;
+	private Transaction expenseTemplate;
 	private Period period;
 	private Date startingDate;
 	private Date lastPaymentDate;
 
-	public CyclicalExpense(Expense newExpense, Period newPeriod, Date newStartingDate) {
+	public CyclicalTransaction(Transaction newExpense, Period newPeriod, Date newStartingDate) {
 		expenseTemplate = newExpense;
 		period = newPeriod;
 		startingDate = newStartingDate;
 		lastPaymentDate = startingDate;
 	}
 
-	public Expense getExpenseTemplate() {
+	public Transaction getTransactionTemplate() {
 		return expenseTemplate;
 	}
 
@@ -40,8 +40,8 @@ public class CyclicalExpense {
 		return diff >= Period.getPeriodInDays(period);
 	}
 
-	public Expense createPayment() {
-		Expense newExpense = new Expense(expenseTemplate);
+	public Transaction createPayment() {
+		Transaction newExpense = new Transaction(expenseTemplate);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(lastPaymentDate);
 		calendar.add(Calendar.DAY_OF_MONTH, (int) Period.getPeriodInDays(period));
@@ -49,5 +49,7 @@ public class CyclicalExpense {
 		lastPaymentDate = newExpense.date;
 		return newExpense;
 	}
+
+ 
 
 }
