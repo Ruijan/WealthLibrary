@@ -6,7 +6,7 @@ public class Transaction {
 
 	public double amount;
 	public String location;
-	public Date transactionDate;
+	public Date date;
 	public ArrayList<String> tags; 
 	public String type;
 	
@@ -14,14 +14,14 @@ public class Transaction {
 	public Transaction(double newAmount, String newLocation, Date newDate, ArrayList<String> newTags) {
 		amount = newAmount;
 		location = newLocation;
-		transactionDate = newDate; 
+		date = newDate; 
 		tags = newTags;
 	}
 
 	public Transaction(Transaction newTransaction) { 
 		amount = newTransaction.amount;
 		location = newTransaction.location;
-		transactionDate = newTransaction.transactionDate; 
+		date = newTransaction.date; 
 		tags = newTransaction.tags;
 	}
 }

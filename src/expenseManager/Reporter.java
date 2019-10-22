@@ -19,7 +19,7 @@ public class Reporter{
 		ArrayList<Transaction> searchedTransactions = new  ArrayList<Transaction>();
 		Calendar transactionDate = Calendar.getInstance();
 		for(Transaction transaction : account.debits) {
-			transactionDate.setTime(transaction.transactionDate);
+			transactionDate.setTime(transaction.date);
 			if(transactionDate.get(Calendar.DAY_OF_WEEK) == weekDayToSearch) searchedTransactions.add(transaction);
 		}
 		return searchedTransactions;
@@ -29,7 +29,7 @@ public class Reporter{
 		ArrayList<Transaction> searchedTransactions = new  ArrayList<Transaction>();
 		Calendar transactionDate = Calendar.getInstance();
 		for(Transaction transaction : account.debits) {
-			transactionDate.setTime(transaction.transactionDate);
+			transactionDate.setTime(transaction.date);
 			if(transactionDate.after(dateToLookFor)) searchedTransactions.add(transaction);
 		}
 		return searchedTransactions;

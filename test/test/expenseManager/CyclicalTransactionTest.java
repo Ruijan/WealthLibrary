@@ -57,7 +57,7 @@ class CyclicalTransactionTest {
 		assertEquals(expenseTemplate.location, expense.location);
 		assertEquals(expenseTemplate.tags, expense.tags);
 		assertEquals(0, TimeUnit.DAYS.convert(cyclicalExpense.lastPaymentDate().getTime() - nextPaymentDate.getTime(), TimeUnit.MILLISECONDS));
-		assertEquals(0, TimeUnit.DAYS.convert(expense.transactionDate.getTime() - nextPaymentDate.getTime(), TimeUnit.MILLISECONDS));
+		assertEquals(0, TimeUnit.DAYS.convert(expense.date.getTime() - nextPaymentDate.getTime(), TimeUnit.MILLISECONDS));
 	}
 
 	private Transaction createExpenseTemplate() {
