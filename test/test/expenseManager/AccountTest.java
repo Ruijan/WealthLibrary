@@ -1,7 +1,6 @@
 package test.expenseManager;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals; 
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,9 +10,9 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import expenseManager.Account;
-import expenseManager.Credit;
+import expenseManager.Asset;
 import expenseManager.Debt;
-import expenseManager.Expense;
+import expenseManager.Transaction;
 
 class AccountTest {
 	
@@ -37,7 +36,7 @@ class AccountTest {
 		ArrayList <String> description = new ArrayList<String>();
 		description.add("Utilities");
 		description.add("Food");
-		Expense expense = new Expense(expenseAmount, newLocation, newDate, description);
+		Transaction expense = new Transaction(expenseAmount, newLocation, newDate, description);
 		account.addDebit(expense);
 		assertEquals(expense, account.debits.get(0));
 		assertEquals(accountBalanceAtTest-expenseAmount,account.balance,0.001);
@@ -57,16 +56,24 @@ class AccountTest {
 	}
 	
 	@Test
-	void addAsset() {}
+	void addAsset() {
+		String newAssetName = "Stock";
+		double newYearReturn = 0.1;
+		double newAssetCurrentValue = 100;
+		Asset asset = new Asset(newAssetName,newYearReturn,newAssetCurrentValue);
+		assertEquals(newAssetName, asset.name);
+		assertEquals(newYearReturn, asset.yearReturn,0.001);
+		assertEquals(newAssetCurrentValue,asset.initiaValue,0.001);
+	}
 	
 	@Test
 	void getExpenseBydescription(){
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Something");
 		descriptions.add("Food");
-		Expense expense = new Expense(100, "", new Date(), descriptions); 
+		Transaction expense = new Transaction(100, "", new Date(), descriptions); 
 		account.addDebit(expense);   
-		ArrayList <Expense> expensesByDescription = new ArrayList<Expense>();
+		ArrayList <Transaction> expensesByDescription = new ArrayList<Transaction>();
 		expensesByDescription.add(expense); 
 		assertEquals(expensesByDescription, account.getExpensesByDescription("Something"));
 	}
@@ -75,7 +82,7 @@ class AccountTest {
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Something");
 		descriptions.add("Food");
-		Expense expense = new Expense(100, "", new Date(), descriptions); 
+		Transaction expense = new Transaction(100, "", new Date(), descriptions); 
 		account.addDebit(expense);
 		account.addDebit(expense); 
 		assertEquals(descriptions,account.getCurrentExpensesTags()); 
@@ -84,8 +91,10 @@ class AccountTest {
 	
 	@Test
 	void addBalance() {
+		ArrayList <String> descriptions = new ArrayList<String>();
+		descriptions.add("Something");
 		double creditedBalance = 100;
-		Credit credit = new Credit(100,"Work", new Date(),"Salary",true,1);
+		Transaction credit = new Transaction(100,"Place", new Date(),descriptions);
 		account.addCredit(credit);
 		assertEquals(accountBalanceAtTest+creditedBalance,account.balance,0.001);
 		assertEquals(account.balance-creditedBalance, account.initialBalance,0.001); 
@@ -97,8 +106,8 @@ class AccountTest {
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Something");
 		descriptions.add("Food"); 
-		account.addDebit(new Expense(100, "", new Date(), descriptions)); 
-		account.addDebit(new Expense(100, "", new Date(), descriptions)); 
+		account.addDebit(new Transaction(100, "", new Date(), descriptions)); 
+		account.addDebit(new Transaction(100, "", new Date(), descriptions)); 
 		assertEquals(accountBalanceAtTest - (100 *2), account.balance,0.001);
 	}
 
@@ -116,30 +125,14 @@ class AccountTest {
 		Map<String,Long> occurrencies = new HashMap<>();
 		occurrencies.put("Something", (long) 3);
 		occurrencies.put("Food", (long) 3); 
-		account.addDebit(new Expense(100, "", new Date(), descriptions1)); 
-		account.addDebit(new Expense(100, "", new Date(), descriptions2));  
-		account.addDebit(new Expense(100, "", new Date(), descriptions3));
+		account.addDebit(new Transaction(100, "", new Date(), descriptions1)); 
+		account.addDebit(new Transaction(100, "", new Date(), descriptions2));  
+		account.addDebit(new Transaction(100, "", new Date(), descriptions3));
 		assertEquals(occurrencies,account.getTagsUsageCount());  
 	}
-	@Test 
-	void getTagUsage() {
-		ArrayList <String> descriptions1 = new ArrayList<String>();
-		descriptions1.add("Something");  
-		account.addDebit(new Expense(100, "", new Date(), descriptions1)); 
-		account.addDebit(new Expense(100, "", new Date(), descriptions1));  
-		account.addDebit(new Expense(100, "", new Date(), descriptions1));
-		assertEquals(3,account.getTagUsageCount("Something"));  
-	}
-	
-	@Test 
-	void getCreditAvailableTypes() { 
-		account.addCredit(new Credit(100,"Slavery", new Date(),"Salary",true,1));
-		account.addCredit(new Credit(100,"SomeStock", new Date(),"Dividend",true,2));
-		ArrayList <String> creditTypes = new ArrayList<String>();
-		creditTypes.add("Salary");
-		creditTypes.add("Dividend");
-		assertEquals(creditTypes,account.getAvailableCreditTypes());  
-	}
-	
+
+
+	 
+	 
 }
 
