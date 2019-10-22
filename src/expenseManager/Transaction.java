@@ -7,10 +7,7 @@ public class Transaction {
 	public double amount;
 	public String location;
 	public Date date;
-	public boolean paid;
-	public ArrayList<String> tags;
-	public boolean cyclical;
-	public long monthlyCycle; 
+	public ArrayList<String> tags; 
 	public String type;
 	
 	public Transaction(double newAmount, String newLocation, Date newDate, ArrayList<String> newTags) {
@@ -19,5 +16,4 @@ public class Transaction {
 		date = newDate; 
 		tags = newTags;
 	}
-	
 }
