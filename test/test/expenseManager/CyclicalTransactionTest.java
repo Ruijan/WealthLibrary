@@ -11,21 +11,21 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
-
-import expenseManager.CyclicalExpense;
-import expenseManager.Expense;
+ 
+import expenseManager.CyclicalTransaction; 
 import expenseManager.Period;
+import expenseManager.Transaction;
 
-class CyclicalExpenseTest {
+class CyclicalTransactionTest {
 
 	@Test
-	void createCyclicalExpenseTest() {
+	void createCyclicalTransactionTest() {
 		Period period = Period.MONTHLY;
 		Date startingDate = new Date();
-		Expense expenseTemplate = createExpenseTemplate();
+		Transaction expenseTemplate = createExpenseTemplate();
 		
-		CyclicalExpense cyclicalExpense = new CyclicalExpense(expenseTemplate, period, startingDate);
-		assertEquals(cyclicalExpense.getExpenseTemplate(), expenseTemplate);
+		CyclicalTransaction cyclicalExpense = new CyclicalTransaction(expenseTemplate, period, startingDate);
+		assertEquals(cyclicalExpense.getTransactionTemplate(), expenseTemplate);
 		assertEquals(cyclicalExpense.getPeriod(), period);
 		assertEquals(cyclicalExpense.getStartingDate(), startingDate);
 		assertEquals(cyclicalExpense.lastPaymentDate(), startingDate);
@@ -37,9 +37,9 @@ class CyclicalExpenseTest {
 		LocalDate date = LocalDate.now().minusDays(15);
 		ZoneId defaultZoneId = ZoneId.systemDefault();
 		Date startingDate = Date.from(date.atStartOfDay(defaultZoneId).toInstant());
-		Expense expenseTemplate = createExpenseTemplate();
+		Transaction expenseTemplate = createExpenseTemplate();
 		
-		CyclicalExpense cyclicalExpense = new CyclicalExpense(expenseTemplate, period, startingDate);
+		CyclicalTransaction cyclicalExpense = new CyclicalTransaction(expenseTemplate, period, startingDate);
 		assertFalse(cyclicalExpense.isAfterPayDay(Calendar.getInstance().getTime()));
 	}
 	
@@ -47,13 +47,13 @@ class CyclicalExpenseTest {
 	void createPaymentTest() {
 		Period period = Period.MONTHLY;
 		Date startingDate = new Date();
-		Expense expenseTemplate = createExpenseTemplate();
+		Transaction expenseTemplate = createExpenseTemplate();
 		LocalDate date = LocalDate.now().plusDays(30);
 		ZoneId defaultZoneId = ZoneId.systemDefault();
 		Date nextPaymentDate = Date.from(date.atStartOfDay(defaultZoneId).toInstant());
 
-		CyclicalExpense cyclicalExpense = new CyclicalExpense(expenseTemplate, period, startingDate);
-		Expense expense = cyclicalExpense.createPayment();
+		CyclicalTransaction cyclicalExpense = new CyclicalTransaction(expenseTemplate, period, startingDate);
+		Transaction expense = cyclicalExpense.createPayment();
 		assertEquals(expenseTemplate.amount, expense.amount);
 		assertEquals(expenseTemplate.location, expense.location);
 		assertEquals(expenseTemplate.tags, expense.tags);
@@ -61,7 +61,7 @@ class CyclicalExpenseTest {
 		assertEquals(0, TimeUnit.DAYS.convert(expense.date.getTime() - nextPaymentDate.getTime(), TimeUnit.MILLISECONDS));
 	}
 
-	private Expense createExpenseTemplate() {
+	private Transaction createExpenseTemplate() {
 		double newAmount = 345.8;
 		String newLocation = "Tokyo";
 		Date today = new Date();
@@ -69,7 +69,7 @@ class CyclicalExpenseTest {
 		descriptions.add("Fees");
 		descriptions.add("Electric bill");
 		
-		return new Expense(newAmount, newLocation, today, descriptions);
+		return new Transaction(newAmount, newLocation, today, descriptions);
 	}
 
 }

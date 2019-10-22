@@ -16,4 +16,8 @@ public class Transaction {
 		date = newDate; 
 		tags = newTags;
 	}
+
+	public Transaction(Transaction expenseTemplate) {
+		// TODO Auto-generated constructor stub
+	}
 }
