@@ -20,7 +20,7 @@ class TransactionTest {
 		Transaction transaction = new Transaction(newAmount, newLocation, today, descriptions);
 		assertEquals(newAmount, transaction.amount);
 		assertEquals(newLocation, transaction.location);
-		assertEquals(today, transaction.date); 
+		assertEquals(today, transaction.transactionDate); 
 		assertEquals(descriptions,transaction.tags); 
 	}
 

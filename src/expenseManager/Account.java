@@ -1,11 +1,6 @@
 package expenseManager;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.ArrayList; 
 
 public class Account {
 	public String name;
@@ -37,33 +32,12 @@ public class Account {
 		balance +=amount;
 	}
 	
-	public Transaction getExpensebyIndex(int index) { 
-		return debits.get(index); 
-	}
+	public void resetAccount() {
+		debits = new ArrayList<Transaction>();
+		credits = new ArrayList<Transaction>();
+		balance = initialBalance;
+	}  
 	
-	public ArrayList <Transaction> getExpensesByDescription(String searchedTag)
-	{
-		ArrayList <Transaction> searchedExpense = new ArrayList<Transaction>(); 
-		for (Transaction debit : debits) { 
-			for (String debitString : debit.tags) 
-				if (debitString.equals(searchedTag)) searchedExpense.add(debit);   
-		}
-		return searchedExpense;
-	}
-
-	public ArrayList<String> getCurrentExpensesTags() {
-		ArrayList <String> tags = new ArrayList<String>(); 
-		debits.forEach((expense) -> tags.addAll(expense.tags));  
-		Set <String>uniqueTags = new HashSet<String>(tags); 
-		return (new ArrayList<String>(uniqueTags));
-	}
-	 
-	public Map<String,Long> getTagsUsageCount() {
-		ArrayList <String> tags = new ArrayList<String>(); 
-		Map<String,Long> usage = new HashMap<>();
-		debits.forEach((expense) -> tags.addAll(expense.tags));  
-		for(String tag : tags) usage.put(tag, (long) Collections.frequency(tags,tag));
-		return usage;
-	}
+	
 	
 }

@@ -38,7 +38,6 @@ class CyclicalTransactionTest {
 		ZoneId defaultZoneId = ZoneId.systemDefault();
 		Date startingDate = Date.from(date.atStartOfDay(defaultZoneId).toInstant());
 		Transaction expenseTemplate = createExpenseTemplate();
-		
 		CyclicalTransaction cyclicalExpense = new CyclicalTransaction(expenseTemplate, period, startingDate);
 		assertFalse(cyclicalExpense.isAfterPayDay(Calendar.getInstance().getTime()));
 	}
@@ -58,7 +57,7 @@ class CyclicalTransactionTest {
 		assertEquals(expenseTemplate.location, expense.location);
 		assertEquals(expenseTemplate.tags, expense.tags);
 		assertEquals(0, TimeUnit.DAYS.convert(cyclicalExpense.lastPaymentDate().getTime() - nextPaymentDate.getTime(), TimeUnit.MILLISECONDS));
-		assertEquals(0, TimeUnit.DAYS.convert(expense.date.getTime() - nextPaymentDate.getTime(), TimeUnit.MILLISECONDS));
+		assertEquals(0, TimeUnit.DAYS.convert(expense.transactionDate.getTime() - nextPaymentDate.getTime(), TimeUnit.MILLISECONDS));
 	}
 
 	private Transaction createExpenseTemplate() {
@@ -68,7 +67,6 @@ class CyclicalTransactionTest {
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Fees");
 		descriptions.add("Electric bill");
-		
 		return new Transaction(newAmount, newLocation, today, descriptions);
 	}
 
