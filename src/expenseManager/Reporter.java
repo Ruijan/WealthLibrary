@@ -3,7 +3,6 @@ package expenseManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -62,6 +61,9 @@ public class Reporter{
 
 	public Transaction getExpensebyIndex(int index) { 
 		return account.debits.get(index); 
+	}
+	public Transaction getCreditbyIndex(int index) { 
+		return account.credits.get(index); 
 	}
 
 

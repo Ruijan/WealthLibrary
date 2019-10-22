@@ -127,10 +127,19 @@ class ReportTests {
 	void getExpenseByIndex() {
 		account.addDebit(new Transaction(101, "", null, null)); 
 		account.addDebit(new Transaction(102, "", null, null));  
-		account.addDebit(new Transaction(103, "", null, null));
-		
+		account.addDebit(new Transaction(103, "", null, null)); 
 		Reporter report = new Reporter(account);
 		assertEquals(101,report.getExpensebyIndex(0).amount,0.01);
+		account.resetAccount();
+	}
+	@Test 
+	void getCreditByIndex() {
+		account.addCredit(new Transaction(101, "", null, null)); 
+		account.addCredit(new Transaction(102, "", null, null));  
+		account.addCredit(new Transaction(103, "", null, null));
 		
+		Reporter report = new Reporter(account);
+		assertEquals(101,report.getCreditbyIndex(0).amount,0.01);
+		account.resetAccount();
 	}
 }
