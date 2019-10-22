@@ -3,14 +3,12 @@ package test.expenseManager;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-
-import expenseManager.Expense;
+import expenseManager.Transaction;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-class ExpenseTest {
-
+class TransactionTest {
 	@Test
 	void createExpense() {
 		double newAmount = 345.8;
@@ -19,12 +17,12 @@ class ExpenseTest {
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Something");
 		descriptions.add("Food");
-		Expense expense = new Expense(newAmount, newLocation, today, descriptions);
-		assertEquals(newAmount, expense.amount);
-		assertEquals(newLocation, expense.location);
-		assertEquals(today, expense.date);
-		assertEquals(false, expense.paid);
-		assertEquals(descriptions,expense.tags); 
+		Transaction transaction = new Transaction(newAmount, newLocation, today, descriptions);
+		assertEquals(newAmount, transaction.amount);
+		assertEquals(newLocation, transaction.location);
+		assertEquals(today, transaction.date);
+		assertEquals(false, transaction.paid);
+		assertEquals(descriptions,transaction.tags); 
 	}
 
 }

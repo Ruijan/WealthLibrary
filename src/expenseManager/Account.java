@@ -13,11 +13,9 @@ public class Account {
 	public String currency;
 	public double balance;
 	public double initialBalance; 
-	public ArrayList <Expense> debits = new ArrayList<Expense>();  
-	public ArrayList <Credit> credits = new ArrayList<Credit>(); 
-	public ArrayList <Debt>  debts = new ArrayList<Debt>();
-	public ArrayList <Asset> assets = new ArrayList<Asset>();
-	
+	public ArrayList <Transaction> debits = new ArrayList<Transaction>();  
+	public ArrayList <Transaction> credits = new ArrayList<Transaction>(); 
+	 
 	public Account(String accountName, String accountCurrency, double accountBalance) {
 		name = accountName;
 		currency = accountCurrency;
@@ -25,12 +23,12 @@ public class Account {
 		initialBalance =  accountBalance; 
 	}
 	
-	public void addDebit(Expense expense) {
+	public void addDebit(Transaction expense) {
 		debits.add(expense); 
 		updateAccountBalance(-expense.amount);
 	}
 	
-	public void addCredit(Credit credit) {
+	public void addCredit(Transaction credit) {
 		credits.add(credit);
 		updateAccountBalance(credit.amount); 
 	}
@@ -38,14 +36,15 @@ public class Account {
 	private void updateAccountBalance(double amount) {
 		balance +=amount;
 	}
-	public Expense getExpensebyIndex(int index) { 
+	
+	public Transaction getExpensebyIndex(int index) { 
 		return debits.get(index); 
 	}
 	
-	public ArrayList <Expense> getExpensesByDescription(String searchedTag)
+	public ArrayList <Transaction> getExpensesByDescription(String searchedTag)
 	{
-		ArrayList <Expense> searchedExpense = new ArrayList<Expense>(); 
-		for (Expense debit : debits) { 
+		ArrayList <Transaction> searchedExpense = new ArrayList<Transaction>(); 
+		for (Transaction debit : debits) { 
 			for (String debitString : debit.tags) 
 				if (debitString.equals(searchedTag)) searchedExpense.add(debit);   
 		}
@@ -58,14 +57,7 @@ public class Account {
 		Set <String>uniqueTags = new HashSet<String>(tags); 
 		return (new ArrayList<String>(uniqueTags));
 	}
-	
-	public ArrayList<String> getAvailableCreditTypes() {
-		ArrayList <String> creditType = new ArrayList<String>(); 
-		credits.forEach((credit) -> creditType.add(credit.type));  
-		Set <String>creditTypes = new HashSet<String>(creditType); 
-		return (new ArrayList<String>(creditTypes)); 
-	}
-	
+	 
 	public Map<String,Long> getTagsUsageCount() {
 		ArrayList <String> tags = new ArrayList<String>(); 
 		Map<String,Long> usage = new HashMap<>();
@@ -73,34 +65,5 @@ public class Account {
 		for(String tag : tags) usage.put(tag, (long) Collections.frequency(tags,tag));
 		return usage;
 	}
-
-	public Long getTagUsageCount(String tag) {
-		ArrayList <String> tags = new ArrayList<String>();  
-		debits.forEach((expense) -> tags.addAll(expense.tags));
-		return (long) Collections.frequency(tags,tag);
-	}
-
-	public double getSumOfAllDebits() { 
-		ArrayList <Double> amounts = new ArrayList<Double>();  
-		debits.forEach((expense) -> amounts.add(expense.amount));
-		return  (-sumOfArrayList(amounts));
-	}
-	
-	public double getSumOfAllCredits() { 
-		ArrayList <Double> amounts = new ArrayList<Double>();  
-		credits.forEach((credit) -> amounts.add(credit.amount));
-		return (sumOfArrayList(amounts));
-	}
-	
-	private double sumOfArrayList(ArrayList<Double> list) {
-		double sum = 0;
-		for(Double x : list) sum += x;
-		return sum;
-	}
- 
-	 
-
-
-	
 	
 }
