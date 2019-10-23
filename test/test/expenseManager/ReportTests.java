@@ -1,7 +1,6 @@
 package test.expenseManager;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals; 
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,22 +19,23 @@ class ReportTests {
 	public String accountCurrencyAtTest = "EUR";
 	public double accountBalanceAtTest = 1000;
 	Account account = new Account(accountNameAtTest,accountCurrencyAtTest,accountBalanceAtTest);
-
-	ArrayList <Transaction> GenerateExpense(){
+	ArrayList <Transaction> createDummyTransactions(int numberOfEntries){
 		ArrayList <String> description = new ArrayList<String>();
 		ArrayList <Transaction> transactions = new ArrayList<Transaction>();
-		for(int i = 0 ; i < 41; i ++) {
+		Calendar calendar = Calendar.getInstance();
+		
+		for(int i = 0 ; i < numberOfEntries+1; i ++) {
 			 description = new ArrayList<String>();
 			 description.add("Utilities"); 
 			 description.add("Toys"); 
 			 description.add("Beverages"); 
 			 description.add("Restaurants");
-			 transactions.add(new Transaction(10,"",null,description));
+			 calendar.set(2018,1,1+i,1,1,1);
+			 transactions.add(new Transaction(10,"Paris",calendar.getTime(),description));
 		}
 		return transactions;
 		
-	}
-	
+	} 
 	@Test
 	void reportTransactionByDateType_Debit() {
 		ArrayList <String> description = new ArrayList<String>();
@@ -142,4 +142,14 @@ class ReportTests {
 		assertEquals(101,report.getCreditbyIndex(0).amount,0.01);
 		account.resetAccount();
 	}
+	@Test
+	void getBankBookEntries() {
+		ArrayList <Transaction> transactions = createDummyTransactions(40);
+		Reporter report = new Reporter(account);
+		for(Transaction transaction : transactions) account.addDebit(transaction);
+		assertEquals(41,report.getBankBookDebitEntries());
+		for(Transaction transaction : transactions) account.addCredit(transaction);
+		assertEquals(41,report.getBankBookCreditEntries());
+	}
+	
 }
