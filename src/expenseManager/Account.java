@@ -8,9 +8,15 @@ public class Account {
 		public String name;
 		public String currency;
 		public double balance;
-		public double initialBalance;
-
-		public AccountData() {
+		public double initialBalance; 
+		public AccountData() { }
+	}
+	public static class BankBook {
+		public ArrayList<Transaction> debits;
+		public ArrayList<Transaction> credits; 
+		public BankBook(ArrayList<Transaction> debits, ArrayList<Transaction> credits) {
+			this.debits = debits;
+			this.credits = credits;
 		}
 	}
 	public AccountData data = new AccountData();
@@ -38,19 +44,10 @@ public class Account {
 	}
 	
 	public void resetAccount() {
-		bankBook.debits = new ArrayList<Transaction>();
-		bankBook.credits = new ArrayList<Transaction>();
+		bankBook = new BankBook(new ArrayList<Transaction>(), new ArrayList<Transaction>());
 		data.balance = data.initialBalance;
 	}  
-	public static class BankBook {
-		public ArrayList<Transaction> debits;
-		public ArrayList<Transaction> credits;
-
-		public BankBook(ArrayList<Transaction> debits, ArrayList<Transaction> credits) {
-			this.debits = debits;
-			this.credits = credits;
-		}
-	}
+	
 	
 	
 }

@@ -65,7 +65,11 @@ public class Reporter{
 	public Transaction getCreditbyIndex(int index) { 
 		return account.bankBook.credits.get(index); 
 	}
-
-
+	public long getBankBookDebitEntries() {
+		return (long) account.bankBook.debits.size();
+	}
+	public long getBankBookCreditEntries() {
+		return (long) account.bankBook.credits.size();
+	}
  
 }
