@@ -34,7 +34,7 @@ public class Reporter{
 		return searchedTransactions;
 	}
 
-	public ArrayList <Transaction> getExpensesByDescription(String searchedTag)
+	public ArrayList<Transaction> getExpensesByDescription(String searchedTag)
 	{
 		ArrayList <Transaction> searchedExpense = new ArrayList<Transaction>(); 
 		for (Transaction debit : account.bankBook.debits) { 

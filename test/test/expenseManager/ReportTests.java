@@ -19,7 +19,6 @@ class ReportTests {
 	public String accountCurrencyAtTest = "EUR";
 	public double accountBalanceAtTest = 1000;
 	Account account = new Account(accountNameAtTest,accountCurrencyAtTest,accountBalanceAtTest);
-
 	ArrayList <Transaction> createDummyTransactions(int numberOfEntries){
 		ArrayList <String> description = new ArrayList<String>();
 		ArrayList <Transaction> transactions = new ArrayList<Transaction>();
@@ -143,7 +142,6 @@ class ReportTests {
 		assertEquals(101,report.getCreditbyIndex(0).amount,0.01);
 		account.resetAccount();
 	}
-	
 	@Test
 	void getBankBookEntries() {
 		ArrayList <Transaction> transactions = createDummyTransactions(40);
