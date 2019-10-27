@@ -18,7 +18,7 @@ public class Reporter{
 		ArrayList<Transaction> searchedTransactions = new  ArrayList<Transaction>();
 		Calendar transactionDate = Calendar.getInstance();
 		for(Transaction transaction : account.bankBook.debits) {
-			transactionDate.setTime(transaction.date);
+			transactionDate.setTime(transaction.data.date);
 			if(transactionDate.get(Calendar.DAY_OF_WEEK) == weekDayToSearch) searchedTransactions.add(transaction);
 		}
 		return searchedTransactions;
@@ -28,7 +28,7 @@ public class Reporter{
 		ArrayList<Transaction> searchedTransactions = new  ArrayList<Transaction>();
 		Calendar transactionDate = Calendar.getInstance();
 		for(Transaction transaction : account.bankBook.debits) {
-			transactionDate.setTime(transaction.date);
+			transactionDate.setTime(transaction.data.date);
 			if(transactionDate.after(dateToLookFor)) searchedTransactions.add(transaction);
 		}
 		return searchedTransactions;
@@ -38,7 +38,7 @@ public class Reporter{
 	{
 		ArrayList <Transaction> searchedExpense = new ArrayList<Transaction>(); 
 		for (Transaction debit : account.bankBook.debits) { 
-			for (String debitString : debit.tags) 
+			for (String debitString : debit.data.tags) 
 				if (debitString.equals(searchedTag)) searchedExpense.add(debit);   
 		}
 		return searchedExpense;
@@ -46,7 +46,7 @@ public class Reporter{
 
 	public ArrayList<String> getCurrentExpensesTags() {
 		ArrayList <String> tags = new ArrayList<String>(); 
-		account.bankBook.debits.forEach((expense) -> tags.addAll(expense.tags));  
+		account.bankBook.debits.forEach((expense) -> tags.addAll(expense.data.tags));  
 		Set <String>uniqueTags = new HashSet<String>(tags); 
 		return (new ArrayList<String>(uniqueTags));
 	}
@@ -54,7 +54,7 @@ public class Reporter{
 	public Map<String,Long> getTagsUsageCount() {
 		ArrayList <String> tags = new ArrayList<String>(); 
 		Map<String,Long> usage = new HashMap<>();
-		account.bankBook.debits.forEach((expense) -> tags.addAll(expense.tags));  
+		account.bankBook.debits.forEach((expense) -> tags.addAll(expense.data.tags));  
 		for(String tag : tags) usage.put(tag, (long) Collections.frequency(tags,tag));
 		return usage;
 	}

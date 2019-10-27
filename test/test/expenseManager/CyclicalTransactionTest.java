@@ -53,21 +53,25 @@ class CyclicalTransactionTest {
 
 		CyclicalTransaction cyclicalExpense = new CyclicalTransaction(expenseTemplate, period, startingDate);
 		Transaction expense = cyclicalExpense.createPayment();
-		assertEquals(expenseTemplate.amount, expense.amount);
-		assertEquals(expenseTemplate.location, expense.location);
-		assertEquals(expenseTemplate.tags, expense.tags);
+		assertEquals(expenseTemplate.data.amount, expense.data.amount);
+		assertEquals(expenseTemplate.data.location, expense.data.location);
+		assertEquals(expenseTemplate.data.tags, expense.data.tags);
 		assertEquals(0, TimeUnit.DAYS.convert(cyclicalExpense.lastPaymentDate().getTime() - nextPaymentDate.getTime(), TimeUnit.MILLISECONDS));
-		assertEquals(0, TimeUnit.DAYS.convert(expense.date.getTime() - nextPaymentDate.getTime(), TimeUnit.MILLISECONDS));
+		assertEquals(0, TimeUnit.DAYS.convert(expense.data.date.getTime() - nextPaymentDate.getTime(), TimeUnit.MILLISECONDS));
 	}
 
 	private Transaction createExpenseTemplate() {
 		double newAmount = 345.8;
-		String newLocation = "Tokyo";
-		Date today = new Date();
+		String newLocation = "Tokyo"; 
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Fees");
 		descriptions.add("Electric bill");
-		return new Transaction(newAmount, newLocation, today, descriptions);
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = newAmount;
+		transactionInformation.location = newLocation;
+		transactionInformation.date = new Date();
+		transactionInformation.tags = descriptions;
+		return new Transaction(transactionInformation);
 	}
 
 }

@@ -17,11 +17,16 @@ class TransactionTest {
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Something");
 		descriptions.add("Food");
-		Transaction transaction = new Transaction(newAmount, newLocation, today, descriptions);
-		assertEquals(newAmount, transaction.amount);
-		assertEquals(newLocation, transaction.location);
-		assertEquals(today, transaction.date); 
-		assertEquals(descriptions,transaction.tags); 
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = newAmount;
+		transactionInformation.location = newLocation;
+		transactionInformation.date = today;
+		transactionInformation.tags = descriptions;
+		Transaction transaction = new Transaction(transactionInformation);
+		assertEquals(newAmount, transaction.data.amount);
+		assertEquals(newLocation, transaction.data.location);
+		assertEquals(today, transaction.data.date); 
+		assertEquals(descriptions,transaction.data.tags); 
 	}
 
 }

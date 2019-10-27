@@ -25,14 +25,17 @@ class AccountTest {
 		assertEquals(Math.abs(accountBalanceAtTest),account.data.balance,0.001); 
 	}
 	@Test
-	void addExpense() {
-		String newLocation = "Paris";
-		Date newDate = new Date(); 
+	void addExpense() { 
 		double expenseAmount = 300; 
 		ArrayList <String> description = new ArrayList<String>();
 		description.add("Utilities");
 		description.add("Food");
-		Transaction expense = new Transaction(expenseAmount, newLocation, newDate, description);
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = 300;
+		transactionInformation.location = "";
+		transactionInformation.date = new Date();
+		transactionInformation.tags = description;
+		Transaction expense = new Transaction(transactionInformation);
 		account.addDebit(expense);
 		assertEquals(expense, account.bankBook.debits.get(0));
 		assertEquals(accountBalanceAtTest-expenseAmount,account.data.balance,0.001);
@@ -43,7 +46,12 @@ class AccountTest {
 		ArrayList <String> description = new ArrayList<String>();
 		description.add("Utilities");
 		description.add("Food");
-		Transaction expense = new Transaction(100, "", null, null);
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = 100;
+		transactionInformation.location = "";
+		transactionInformation.date = new Date();
+		transactionInformation.tags = description;
+		Transaction expense = new Transaction(transactionInformation);
 		account.addDebit(expense);
 		account.addDebit(expense);
 		account.addDebit(expense);
@@ -59,7 +67,12 @@ class AccountTest {
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Something");
 		double creditedBalance = 100;
-		Transaction credit = new Transaction(100,"Place", new Date(),descriptions);
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = 100;
+		transactionInformation.location = "";
+		transactionInformation.date = new Date();
+		transactionInformation.tags = descriptions;
+		Transaction credit = new Transaction(transactionInformation);
 		account.addCredit(credit);
 		assertEquals(accountBalanceAtTest+creditedBalance,account.data.balance,0.001);
 		assertEquals(account.data.balance-creditedBalance, account.data.initialBalance,0.001); 
@@ -71,8 +84,13 @@ class AccountTest {
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Something");
 		descriptions.add("Food"); 
-		account.addDebit(new Transaction(100, "", new Date(), descriptions)); 
-		account.addDebit(new Transaction(100, "", new Date(), descriptions)); 
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = 100;
+		transactionInformation.location = "";
+		transactionInformation.date = new Date();
+		transactionInformation.tags = descriptions;
+		account.addDebit(new Transaction(transactionInformation)); 
+		account.addDebit(new Transaction(transactionInformation)); 
 		assertEquals(accountBalanceAtTest - (100 *2), account.data.balance,0.001);
 	}
  

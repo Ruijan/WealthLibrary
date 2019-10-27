@@ -31,9 +31,15 @@ class ReportTests {
 			 description.add("Beverages"); 
 			 description.add("Restaurants");
 			 calendar.set(2018,1,1+i,1,1,1);
-			 transactions.add(new Transaction(10,"Paris",calendar.getTime(),description));
+			 Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+			 transactionInformation.amount = 10;
+			 transactionInformation.location = "Paris";
+			 transactionInformation.date = calendar.getTime();
+			 transactionInformation.tags = description;
+			 transactions.add(new Transaction(transactionInformation));
 		}
 		return transactions;
+	 
 		
 	} 
 	@Test
@@ -49,7 +55,12 @@ class ReportTests {
 		for(int i=0; i <30;i++) {
 			calendar.set(2018, 11, 1+i, 59, 59, 59);
 			Date date = calendar.getTime();
-			Transaction transaction = new Transaction(amount, location, date, description);
+			Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+			transactionInformation.amount = 300;
+			transactionInformation.location = "";
+			transactionInformation.date = date;
+			transactionInformation.tags = description;
+			Transaction transaction = new Transaction(transactionInformation);
 			if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) mondayTransactions.add(transaction);
 			transactions.add(transaction);
 			account.addDebit(transaction);
@@ -70,7 +81,12 @@ class ReportTests {
 		for(int i=0; i <30;i++) {
 			calendar.set(2018, 11, 1+i, 59, 59, 59);
 			Date date = calendar.getTime();
-			Transaction transaction = new Transaction(amount, location, date, description);
+			Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+			transactionInformation.amount = 300;
+			transactionInformation.location = "";
+			transactionInformation.date = date;
+			transactionInformation.tags = description;
+			Transaction transaction = new Transaction(transactionInformation);
 			if (i > 28) transactions.add(transaction);
 			account.addDebit(transaction);
 		}   
@@ -83,7 +99,12 @@ class ReportTests {
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Something");
 		descriptions.add("Food");
-		Transaction expense = new Transaction(100, "", new Date(), descriptions); 
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = 300;
+		transactionInformation.location = "";
+		transactionInformation.date = new Date();
+		transactionInformation.tags = descriptions; 
+		Transaction expense = new Transaction(transactionInformation); 
 		account.addDebit(expense);   
 		ArrayList <Transaction> expensesByDescription = new ArrayList<Transaction>();
 		expensesByDescription.add(expense); 
@@ -96,7 +117,12 @@ class ReportTests {
 		ArrayList <String> descriptions = new ArrayList<String>();
 		descriptions.add("Something");
 		descriptions.add("Food");
-		Transaction expense = new Transaction(100, "", new Date(), descriptions); 
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = 300;
+		transactionInformation.location = "";
+		transactionInformation.date = new Date();
+		transactionInformation.tags = descriptions; 
+		Transaction expense = new Transaction(transactionInformation); 
 		account.addDebit(expense);
 		account.addDebit(expense); 
 		Reporter report = new Reporter(account);
@@ -116,30 +142,44 @@ class ReportTests {
 		Map<String,Long> occurrencies = new HashMap<>();
 		occurrencies.put("Something", (long) 3);
 		occurrencies.put("Food", (long) 3); 
-		account.addDebit(new Transaction(100, "", new Date(), descriptions1)); 
-		account.addDebit(new Transaction(100, "", new Date(), descriptions2));  
-		account.addDebit(new Transaction(100, "", new Date(), descriptions3));
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = 300;
+		transactionInformation.location = "";
+		transactionInformation.date = new Date();
+		transactionInformation.tags = descriptions1; 
+		account.addDebit(new Transaction(transactionInformation)); 
+		transactionInformation.tags = descriptions2;
+		account.addDebit(new Transaction(transactionInformation));  
+		transactionInformation.tags = descriptions3;
+		account.addDebit(new Transaction(transactionInformation));
 		Reporter report = new Reporter(account);
 		assertEquals(occurrencies,report.getTagsUsageCount());  
 		account.resetAccount();
 	}
 	@Test 
 	void getExpenseByIndex() {
-		account.addDebit(new Transaction(101, "", null, null)); 
-		account.addDebit(new Transaction(102, "", null, null));  
-		account.addDebit(new Transaction(103, "", null, null)); 
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = 101; 
+		account.addDebit(new Transaction(transactionInformation)); 
+		transactionInformation.amount = 102; 
+		account.addDebit(new Transaction(transactionInformation)); 
+		transactionInformation.amount = 103; 
+		account.addDebit(new Transaction(transactionInformation)); 
 		Reporter report = new Reporter(account);
-		assertEquals(101,report.getExpensebyIndex(0).amount,0.01);
+		assertEquals(101,report.getExpensebyIndex(0).data.amount,0.01);
 		account.resetAccount();
 	}
 	@Test 
 	void getCreditByIndex() {
-		account.addCredit(new Transaction(101, "", null, null)); 
-		account.addCredit(new Transaction(102, "", null, null));  
-		account.addCredit(new Transaction(103, "", null, null));
-		
+		Transaction.TransactionData transactionInformation = new Transaction.TransactionData();
+		transactionInformation.amount = 101; 
+		account.addCredit(new Transaction(transactionInformation)); 
+		transactionInformation.amount = 102; 
+		account.addCredit(new Transaction(transactionInformation)); 
+		transactionInformation.amount = 103; 
+		account.addCredit(new Transaction(transactionInformation)); 
 		Reporter report = new Reporter(account);
-		assertEquals(101,report.getCreditbyIndex(0).amount,0.01);
+		assertEquals(101,report.getCreditbyIndex(0).data.amount,0.01);
 		account.resetAccount();
 	}
 	@Test

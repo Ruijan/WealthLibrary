@@ -11,5 +11,8 @@ public class Asset {
 		yearReturn = newYearReturn;
 		initiaValue = newAssetCurrentValue;
 	}
+	public void test() {
+		
+	}
 
 }

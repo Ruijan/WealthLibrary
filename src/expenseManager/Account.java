@@ -31,12 +31,12 @@ public class Account {
 	
 	public void addDebit(Transaction expense) {
 		bankBook.debits.add(expense); 
-		updateAccountBalance(-expense.amount);
+		updateAccountBalance(-expense.data.amount);
 	}
 	
 	public void addCredit(Transaction credit) {
 		bankBook.credits.add(credit);
-		updateAccountBalance(credit.amount); 
+		updateAccountBalance(credit.data.amount); 
 	}
 	
 	private void updateAccountBalance(double amount) {
